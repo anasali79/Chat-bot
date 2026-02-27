@@ -8,9 +8,18 @@ import sys
 import uvicorn
 
 # Add the project root to the path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-from backend.main import app
+# Import app with proper error handling
+try:
+    from backend.main import app
+except ImportError as e:
+    print(f"Import error: {e}")
+    print("Current path:", sys.path)
+    print("Current working directory:", os.getcwd())
+    raise
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))

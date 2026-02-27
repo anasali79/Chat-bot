@@ -7,8 +7,14 @@ from pydantic import Field, BaseModel
 import re
 
 # Import our utilities
-from ..utils.data_loader import titanic_data
-from ..utils.visualizer import titanic_visualizer
+# Handle deployment vs local imports
+try:
+    from backend.utils.data_loader import titanic_data
+    from backend.utils.visualizer import titanic_visualizer
+except ImportError:
+    # Fallback for local development
+    from ..utils.data_loader import titanic_data
+    from ..utils.visualizer import titanic_visualizer
 
 
 class PassengerPercentageTool(BaseTool):

@@ -3,7 +3,12 @@ from pydantic import BaseModel
 from typing import Dict, Any
 import json
 
-from ..models.titanic_agent import create_titanic_agent
+# Import based on deployment environment
+try:
+    from backend.models.titanic_agent import create_titanic_agent
+except ImportError:
+    # Fallback for local development
+    from ..models.titanic_agent import create_titanic_agent
 
 router = APIRouter()
 
@@ -73,7 +78,12 @@ async def get_dataset_info():
     """
     Get basic information about the Titanic dataset.
     """
-    from ..utils.data_loader import titanic_data
+    # Import based on deployment environment
+    try:
+        from backend.utils.data_loader import titanic_data
+    except ImportError:
+        # Fallback for local development
+        from ..utils.data_loader import titanic_data
     
     df = titanic_data.get_dataframe()
     

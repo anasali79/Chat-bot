@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import routes - using absolute import for deployment compatibility
+# Import routes with deployment compatibility
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from api.routes import router as api_router
+# Add backend to path for deployment
+backend_path = os.path.dirname(os.path.abspath(__file__))
+if backend_path not in sys.path:
+    sys.path.insert(0, backend_path)
+
+# Try absolute import first (for Render deployment)
+try:
+    from backend.api.routes import router as api_router
+except ImportError:
+    # Fallback to relative import (for local development)
+    from api.routes import router as api_router
 
 # Create the FastAPI app
 app = FastAPI(
