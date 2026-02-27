@@ -79,7 +79,9 @@ if submit_button and user_input.strip():
     with st.spinner("Analyzing your question..."):
         try:
             # Send request to the backend API
-            api_url = os.getenv("BACKEND_URL", "http://localhost:8000") + "/api/v1/ask"
+            # Use your Render backend URL
+            # Update this with your actual Render backend URL
+            api_url = os.getenv("BACKEND_URL", "https://chat-bot-5pr0.onrender.com/") + "/api/v1/ask"
             payload = {"query": user_input}
             
             response = requests.post(api_url, json=payload)
