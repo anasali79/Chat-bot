@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import json
+import os
 from typing import Dict, Any
 import streamlit.components.v1 as components
 
@@ -78,7 +79,7 @@ if submit_button and user_input.strip():
     with st.spinner("Analyzing your question..."):
         try:
             # Send request to the backend API
-            api_url = "http://localhost:8000/api/v1/ask"  # Default URL, can be changed via environment variable
+            api_url = os.getenv("BACKEND_URL", "http://localhost:8000") + "/api/v1/ask"
             payload = {"query": user_input}
             
             response = requests.post(api_url, json=payload)
