@@ -5,8 +5,12 @@ Startup script for Render deployment
 
 import os
 import sys
-from backend.main import app
 import uvicorn
+
+# Add the project root to the path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from backend.main import app
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))

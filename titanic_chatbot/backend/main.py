@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import routes - using absolute import for deployment compatibility
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from api.routes import router as api_router
+# Import based on whether running as a script or module
+try:
+    from .api.routes import router as api_router
+except ImportError:
+    # Running as a script, import directly
+    from api.routes import router as api_router
 
 # Create the FastAPI app
 app = FastAPI(
